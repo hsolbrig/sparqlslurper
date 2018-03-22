@@ -1,7 +1,10 @@
 # SPARQL Slurper for `rdflib`
 [![Pyversions](https://img.shields.io/pypi/pyversions/sparql_slurper.svg)](https://pypi.python.org/pypi/sparql_slurper)
-
 [![PyPi](https://version-image.appspot.com/pypi/?name=sparql_slurper)](https://pypi.python.org/pypi/sparql_slurper)
+
+## Revision History
+* 0.1.0 - Initial drop
+* 0.1.1 - Added debug_slurps parameter
 
 An implementation of a [`rdflib`](https://github.com/RDFLib/rdflib)[`Graph`](https://rdflib.readthedocs.io/en/stable/apidocs/rdflib.html#rdflib.graph.Graph) that acts as a "cache" for a SPARQL endpoint.  
 SPARQL Slurper translates the `Graph.triples()` function into the corresponding SPARQL

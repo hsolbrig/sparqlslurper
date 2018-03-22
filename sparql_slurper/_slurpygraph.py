@@ -1,5 +1,6 @@
 from typing import Dict, NamedTuple, Union, List, Tuple, Optional
 
+import time
 from SPARQLWrapper import SPARQLWrapper, JSON
 from rdflib import Graph, URIRef, Literal, BNode
 
@@ -25,6 +26,7 @@ class SlurpyGraph(Graph):
         self.sparql = SPARQLWrapper(endpoint)
         self.sparql.setReturnFormat(JSON)
         self.resolved_nodes: List[QueryTriple] = [(None, None, None)]
+        self.debug_slurps = False
         super().__init__(*args, **kwargs)
 
     @staticmethod
@@ -63,8 +65,13 @@ class SlurpyGraph(Graph):
             obj = f"<{pattern[2]}>" if isinstance(pattern[2], URIRef) else \
                 str(pattern[2]) if pattern[2] is not None else '?o'
             query = f"SELECT ?s ?p ?o {{{subj} {pred} {obj}}}"
+            if self.debug_slurps:
+                start = time.time()
+                print(f"SLURPER: ({subj} {pred} {obj})", end="")
             self.sparql.setQuery(query)
             resp = self.sparql.query().convert()
+            if self.debug_slurps:
+                print(f" ({round(time.time() - start, 2)} secs) - {len(resp['results']['bindings'])} triples")
             for row in resp['results']['bindings']:
                 self.add(RDFTriple(pattern[0] if pattern[0] is not None else self._map_type(row['s']),
                                    pattern[1] if pattern[1] is not None else self._map_type(row['p']),

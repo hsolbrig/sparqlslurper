@@ -1,5 +1,8 @@
 import unittest
 
+import io
+from contextlib import redirect_stdout
+
 from rdflib import Namespace
 from sparql_slurper import SlurpyGraph
 
@@ -12,6 +15,7 @@ class ReactomeTestCase(unittest.TestCase):
         WD = Namespace("http://www.wikidata.org/entity/")
         P = Namespace("http://www.wikidata.org/prop/")
         g = SlurpyGraph(endpoint)
+        g.debug_slurps = True
         gpo = list(g.predicate_objects(WD.Q29017194))
         orig_len = len(gpo)
         # Test that we get something
@@ -26,6 +30,15 @@ class ReactomeTestCase(unittest.TestCase):
             gp31s = list(g.predicate_objects(s))
             added_length += len(gp31s)
         self.assertEqual(orig_len + added_length, len(g))
+
+    def test_debug_slurps(self):
+        WD = Namespace("http://www.wikidata.org/entity/")
+        g = SlurpyGraph(endpoint)
+        g.debug_slurps = True
+        output = io.StringIO()
+        with redirect_stdout(output):
+            _ = list(g.predicate_objects(WD.Q29017194))
+        self.assertTrue(output.getvalue().startswith("SLURPER: (<http://www.wikidata.org/entity/Q29017194> ?p ?o)"))
 
 
 if __name__ == '__main__':
