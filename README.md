@@ -14,3 +14,6 @@ query and resolves it against an endpoint.
 
 ## Use
 See [Jupyter notebook](README.ipynb)
+
+## Issues and notes
+* We still need to add BNode reification -- at the moment this code generates a ValueError if it crosses a BNode boundary
