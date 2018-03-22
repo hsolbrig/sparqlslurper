@@ -13,3 +13,4 @@ query and resolves it against an endpoint.
 * [`sparqlwrapper`](https://github.com/RDFLib/sparqlwrapper) -- A wrapper for a remot SPARQL endpoint
 
 ## Use
+See [Jupyter notebook](README.ipynb)
