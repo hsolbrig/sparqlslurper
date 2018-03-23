@@ -26,7 +26,12 @@ class SlurpyGraph(Graph):
         self.sparql = SPARQLWrapper(endpoint)
         self.sparql.setReturnFormat(JSON)
         self.resolved_nodes: List[QueryTriple] = [(None, None, None)]
+
         self.debug_slurps = False
+        self.total_slurptime = 0.0
+        self.total_calls = 0
+        self.total_queries = 0
+        self.total_triples = 0
         super().__init__(*args, **kwargs)
 
     @staticmethod
@@ -59,19 +64,25 @@ class SlurpyGraph(Graph):
         :param pattern: `(s, p, o)` tuple, with `None` as wild cards
         :return: Generator for resulting triples
         """
+        self.total_calls += 1
         if not self.already_resolved(pattern):
             subj = f"<{pattern[0]}>" if pattern[0] is not None else '?s'
             pred = f"<{pattern[1]}>" if pattern[1] is not None else '?p'
             obj = f"<{pattern[2]}>" if isinstance(pattern[2], URIRef) else \
                 str(pattern[2]) if pattern[2] is not None else '?o'
             query = f"SELECT ?s ?p ?o {{{subj} {pred} {obj}}}"
+            start = time.time()
             if self.debug_slurps:
-                start = time.time()
                 print(f"SLURPER: ({subj} {pred} {obj})", end="")
             self.sparql.setQuery(query)
             resp = self.sparql.query().convert()
+            elapsed = time.time() - start
+            ntriples = len(resp['results']['bindings'])
+            self.total_slurptime += elapsed
+            self.total_triples += ntriples
+            self.total_queries += 1
             if self.debug_slurps:
-                print(f" ({round(time.time() - start, 2)} secs) - {len(resp['results']['bindings'])} triples")
+                print(f" ({round(elapsed, 2)} secs) - {ntriples} triples")
             for row in resp['results']['bindings']:
                 self.add(RDFTriple(pattern[0] if pattern[0] is not None else self._map_type(row['s']),
                                    pattern[1] if pattern[1] is not None else self._map_type(row['p']),

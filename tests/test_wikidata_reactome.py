@@ -15,7 +15,7 @@ class ReactomeTestCase(unittest.TestCase):
         WD = Namespace("http://www.wikidata.org/entity/")
         P = Namespace("http://www.wikidata.org/prop/")
         g = SlurpyGraph(endpoint)
-        g.debug_slurps = True
+        g.debug_slurps = False
         gpo = list(g.predicate_objects(WD.Q29017194))
         orig_len = len(gpo)
         # Test that we get something
@@ -30,6 +30,9 @@ class ReactomeTestCase(unittest.TestCase):
             gp31s = list(g.predicate_objects(s))
             added_length += len(gp31s)
         self.assertEqual(orig_len + added_length, len(g))
+        print(f"{g.total_calls}, {g.total_queries}, {g.total_slurptime}, {g.total_triples}")
+        self.assertEqual((5, 3, 41), (g.total_calls, g.total_queries, g.total_triples))
+        self.assertTrue(g.total_slurptime > 0.1)
 
     def test_debug_slurps(self):
         WD = Namespace("http://www.wikidata.org/entity/")
