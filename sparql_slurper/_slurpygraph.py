@@ -32,6 +32,7 @@ class SlurpyGraph(Graph):
         self.total_calls = 0
         self.total_queries = 0
         self.total_triples = 0
+        self.sparql_locked = False
         super().__init__(*args, **kwargs)
 
     @staticmethod
@@ -48,7 +49,7 @@ class SlurpyGraph(Graph):
         :param pattern: pattern to check
         :return: True it is a subset of elements already loaded
         """
-        if pattern == (None, None, None):
+        if self.sparql_locked or pattern == (None, None, None):
             return True
         for resolved_node in self.resolved_nodes:
             if resolved_node != (None, None, None) and \
@@ -89,3 +90,12 @@ class SlurpyGraph(Graph):
                                    pattern[2] if pattern[2] is not None else self._map_type(row['o'])))
             self.resolved_nodes.append(pattern)
         return super().triples(pattern)
+
+    def serialize(self, destination=None, format="xml",
+                  base=None, encoding=None, **args):
+        self.sparql_locked = True
+        try:
+            rval = super().serialize(destination, format, base, encoding, **args)
+        finally:
+            self.sparql_locked = False
+        return rval

@@ -8,7 +8,7 @@ if sys.version_info < (3, 6):
 
 setup(
     name='sparql_slurper',
-    version='0.1.2',
+    version='0.1.3',
     packages=['sparql_slurper'],
     url="http://github.com/hsolbrig/sparql_slurper",
     license='Apache 2.0',

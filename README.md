@@ -6,6 +6,7 @@
 * 0.1.0 - Initial drop
 * 0.1.1 - Added debug_slurps parameter
 * 0.1.2 - Added diagnostic parameters
+* 0.1.3 - Lock out sparql access during serialize
 
 An implementation of a [`rdflib`](https://github.com/RDFLib/rdflib)[`Graph`](https://rdflib.readthedocs.io/en/stable/apidocs/rdflib.html#rdflib.graph.Graph) that acts as a "cache" for a SPARQL endpoint.  
 SPARQL Slurper translates the `Graph.triples()` function into the corresponding SPARQL

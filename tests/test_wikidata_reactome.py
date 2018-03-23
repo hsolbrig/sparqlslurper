@@ -3,7 +3,7 @@ import unittest
 import io
 from contextlib import redirect_stdout
 
-from rdflib import Namespace
+from rdflib import Namespace, Graph
 from sparql_slurper import SlurpyGraph
 
 endpoint = 'https://query.wikidata.org/sparql'
@@ -42,6 +42,19 @@ class ReactomeTestCase(unittest.TestCase):
         with redirect_stdout(output):
             _ = list(g.predicate_objects(WD.Q29017194))
         self.assertTrue(output.getvalue().startswith("SLURPER: (<http://www.wikidata.org/entity/Q29017194> ?p ?o)"))
+
+    def test_serialize(self):
+        # Issue #1 - serialize goes after the entire graph
+        WD = Namespace("http://www.wikidata.org/entity/")
+        g = SlurpyGraph(endpoint)
+        _ = list(g.predicate_objects(WD.Q29017194))
+        g.debug_slurps = True
+        # Warning - this will go away forever if the bug isn't fixed
+        serialized_graph = g.serialize(format="turtle").decode('utf-8')
+        g2 = Graph()
+        g2.parse(data=serialized_graph, format="turtle")
+        self.assertEqual(len(list(g)), len(list(g2)))
+
 
 
 if __name__ == '__main__':
