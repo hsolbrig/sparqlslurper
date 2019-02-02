@@ -8,7 +8,7 @@ if sys.version_info < (3, 6):
 
 setup(
     name='sparql_slurper',
-    version='0.1.3',
+    version='0.1.4',
     packages=['sparql_slurper'],
     url="http://github.com/hsolbrig/sparql_slurper",
     license='Apache 2.0',
@@ -17,7 +17,7 @@ setup(
     description='SPARQL Slurper for rdflib',
     install_requires=['rdflib', 'SPARQLWrapper'],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries',
