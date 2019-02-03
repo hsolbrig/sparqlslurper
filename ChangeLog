@@ -1,0 +1,15 @@
+CHANGES
+=======
+
+v0.2.0
+------
+
+* Add support for endpoints that support BNode persistence
+* Fix Issue #1 - lock sparql access during serialize
+* Updated notebook to reflect new version
+* Added diagnostic parameters
+* Added debug\_slurper parameter for diagnostics
+* Added note about BNode reification
+* Updated Jupyter notebook
+* Updated Jupyter notebook
+* Initial drop - version 0.1.0
