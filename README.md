@@ -9,6 +9,7 @@
 * 0.1.3 - Lock out sparql access during serialize
 * 0.1.4 - Add persistent_bnodes parameter 
 * 0.2.0 - Switch over to pbr and pipenv
+* 0.2.1 - Add ability to supply a named graph and diagnostic/debug query results
 
 An implementation of a [`rdflib`](https://github.com/RDFLib/rdflib)[`Graph`](https://rdflib.readthedocs.io/en/stable/apidocs/rdflib.html#rdflib.graph.Graph) that acts as a "cache" for a SPARQL endpoint.  
 SPARQL Slurper translates the `Graph.triples()` function into the corresponding SPARQL

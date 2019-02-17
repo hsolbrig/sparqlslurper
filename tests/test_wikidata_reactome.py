@@ -41,7 +41,11 @@ class ReactomeTestCase(unittest.TestCase):
         output = io.StringIO()
         with redirect_stdout(output):
             _ = list(g.predicate_objects(WD.Q29017194))
-        self.assertTrue(output.getvalue().startswith("SLURPER: (<http://www.wikidata.org/entity/Q29017194> ?p ?o)"))
+        if not output.getvalue().startswith("SPARQL: "
+                                            "(SELECT ?s ?p ?o {<http://www.wikidata.org/entity/Q29017194> ?p ?o})"):
+            print("Unexpected:")
+            print(output.getvalue())
+            self.assertTrue(False)
 
     def test_serialize(self):
         # Issue #1 - serialize goes after the entire graph
