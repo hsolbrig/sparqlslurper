@@ -1,6 +1,13 @@
 CHANGES
 =======
 
+* Add named graph option and debug hooks
+
+v0.2.1
+------
+
+* Switched to pipenv/pbr
+
 v0.2.0
 ------
 
