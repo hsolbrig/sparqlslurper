@@ -1,6 +1,8 @@
 # SPARQL Slurper for `rdflib`
+
 [![Pyversions](https://img.shields.io/pypi/pyversions/sparql_slurper.svg)](https://pypi.python.org/pypi/sparql_slurper)
-[![PyPi](https://version-image.appspot.com/pypi/?name=sparql_slurper)](https://pypi.python.org/pypi/sparql_slurper)
+[![PyPi](https://img.shields.io/pypi/v/sparql_slurper.svg)](https://pypi.python.org/pypi/sparql_slurper)
+
 
 ## Revision History
 * 0.1.0 - Initial drop
