@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a4fbdafea5b26cccf3be4ddd4823f50d439cb9cf70a9ef1617763bf2ee9d572f"
+            "sha256": "eeada470477dae9f68a04a9ac4fabb425da23b5384b3b9d62421f18dd476c2f2"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -25,10 +25,10 @@
         },
         "pyparsing": {
             "hashes": [
-                "sha256:66c9268862641abcac4a96ba74506e594c884e3f57690a696d21ad8210ed667a",
-                "sha256:f6c5ef0d7480ad048c054c37632c67fca55299990fff127850181659eea33fc3"
+                "sha256:1873c03321fc118f4e9746baf201ff990ceb915f433f23b395f5580d1840cb2a",
+                "sha256:9b6323ef4ab914af344ba97510e966d64ba91055d6b9afa6b30799340e89cc03"
             ],
-            "version": "==2.3.1"
+            "version": "==2.4.0"
         },
         "rdflib": {
             "hashes": [
@@ -47,12 +47,12 @@
         },
         "sparqlwrapper": {
             "hashes": [
-                "sha256:2a95fdede2833be660b81092934c4a0054ff85f2693098556762a2759ea486f1",
-                "sha256:7f4c8d38ea1bfcffbc358c9a05de35a3fd7152cc3e8ea57963ee7a0a242f7a5e",
-                "sha256:acf6d60f0a3684cb673653b07871acb0c350a974b891f20f8ac94926ff9eb2ff"
+                "sha256:14ec551f0d60b4a496ffcc31f15337e844c085b8ead8cbe9a7178748a6de3794",
+                "sha256:21928e7a97f565e772cdeeb0abad428960f4307e3a13dbdd8f6d3da8a6a506c9",
+                "sha256:abc3e7eadcad32fa69a85c003853e2f6f73bda6cc999853838f401a5a1ea1109"
             ],
             "index": "pypi",
-            "version": "==1.8.2"
+            "version": "==1.8.4"
         }
     },
     "develop": {}

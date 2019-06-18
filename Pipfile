@@ -6,8 +6,8 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-rdflib = "*"
-sparqlwrapper = "*"
+rdflib = ">=4.2.2"
+sparqlwrapper = ">=1.8.2"
 
 [requires]
 python_version = "3.7"

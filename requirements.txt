@@ -10,8 +10,5 @@
 # `Pipfile.lock` and then regenerate `requirements*.txt`.
 ################################################################################
 
-isodate==0.6.0
-pyparsing==2.3.1
-rdflib==4.2.2
-six==1.12.0
-sparqlwrapper==1.8.2
+rdflib>=4.2.2
+sparqlwrapper>=1.8.2
