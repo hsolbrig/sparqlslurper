@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+v0.2.2
+------
+
+* Fix requirements.txt issue
+* Update Changelog
 * Update anciallary files
 * Add named graph option and debug hooks
 
