@@ -1,6 +1,7 @@
-from typing import Dict, NamedTuple, Union, List, Tuple, Optional, Callable, Type
-
 import time
+from typing import Dict, NamedTuple, Union, List, Tuple, Optional, Type
+from urllib.parse import urlsplit, parse_qsl, urlunsplit
+
 from SPARQLWrapper import SPARQLWrapper, JSON
 from rdflib import Graph, URIRef, Literal, BNode, Namespace
 
@@ -15,7 +16,9 @@ class RDFTriple(NamedTuple):
     p: URIRef
     o: Union[Literal, URIRef, BNode]
 
+
 TM_NS = Namespace("http://www.ontotext.com/tm#")
+
 
 class SlurpyGraph(Graph):
     """ A Graph that acts as a "cache" for a SPARQL endpoint """
@@ -26,16 +29,17 @@ class SlurpyGraph(Graph):
         :param endpoint: URL of SPARQL endpoint
         :param persistent_bnodes: BNodes persist across SPARQL calls,
         :param agent: User agent
-
-        :param graphdb_bnodes: Use the GraphDB bnode identifiers
         """
-        self.sparql = SPARQLWrapper(endpoint)
+        endpoint_base, query = self._parse_endpoint_parms(endpoint)
+        self.sparql = SPARQLWrapper(endpoint_base)
+        for k, v in query:
+            self.sparql.addParameter(k, v)
         self.persistent_bnodes = persistent_bnodes
         self.sparql.setReturnFormat(JSON)
         self.resolved_nodes: List[QueryTriple] = [(None, None, None)]
         self.debug_slurps = False
-        self._query_result_hook: Type[QueryResultHook] = None
-        self.graph_name: str = None
+        self._query_result_hook: Optional[Type[QueryResultHook]] = None
+        self.graph_name: Optional[str] = None
         self.total_slurptime = 0.0
         self.total_calls = 0
         self.total_queries = 0
@@ -44,6 +48,16 @@ class SlurpyGraph(Graph):
         super().__init__(*args, **kwargs)
         if agent:
             self.sparql.agent = agent
+
+    def _parse_endpoint_parms(self, endpoint: str) -> Tuple[str, List[Tuple[str, str]]]:
+        """
+        Split the parameters off of endpoint and pass them to SPARQLWrapper via the addParams option
+        :param endpoint: Endpoint URI including possible parameter strings
+        :return: Endpoint URI and separate args
+        """
+        x = urlsplit(endpoint, allow_fragments=False)
+        query = parse_qsl(x.query)
+        return urlunsplit((x.scheme, x.netloc, x.path, '', x.fragment)), query
 
     def add_result_hook(self, hook: Type["QueryResultHook"]) -> Type["QueryResultHook"]:
         """

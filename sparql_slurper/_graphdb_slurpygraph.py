@@ -1,8 +1,6 @@
-from typing import Dict, Callable, Union, Tuple
+from typing import Tuple
 
-from rdflib import URIRef, BNode, Literal, Namespace
-
-from sparql_slurper import RDFTriple, NodeType, SlurpyGraph, TM_NS
+from sparql_slurper import SlurpyGraph, TM_NS
 
 graphdb_id = "<http://www.ontotext.com/owlim/entity#id>"
 

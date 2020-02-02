@@ -29,5 +29,9 @@ class SparqlParametersTestCase(unittest.TestCase):
         g.sparql.addParameter("infer", "false")
         self.assertGreater(60, len(list(g.predicate_objects(FHIR.Patient))))
 
+        g = GrapphDBSlurpyGraph(endpoint + '?infer=false')
+        self.assertGreater(60, len(list(g.predicate_objects(FHIR.Patient))))
+
+
 if __name__ == '__main__':
     unittest.main()

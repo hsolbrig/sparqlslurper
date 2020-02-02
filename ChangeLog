@@ -1,10 +1,23 @@
 CHANGES
 =======
 
+v0.3.1
+------
+
+* Pull lock file out of build
+
+v0.3
+----
+
+* Added GraphDB persistence mechanism
+* Add Changelog
+
 v0.2.2
 ------
 
 * Fix requirements.txt issue
+* Update README.md
+* Update README.md
 * Update Changelog
 * Update anciallary files
 * Add named graph option and debug hooks
