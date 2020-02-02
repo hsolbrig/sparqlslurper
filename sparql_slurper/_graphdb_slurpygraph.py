@@ -5,7 +5,7 @@ from sparql_slurper import SlurpyGraph, TM_NS
 graphdb_id = "<http://www.ontotext.com/owlim/entity#id>"
 
 
-class GrapphDBSlurpyGraph(SlurpyGraph):
+class GraphDBSlurpyGraph(SlurpyGraph):
 
     def gen_query(self,  pattern, gquery: str, gqueryend: str) -> str:
         """ Generate a query that includes the identifiers of any variables and adds identifier translation for

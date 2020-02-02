@@ -5,7 +5,7 @@ from contextlib import redirect_stdout
 
 from rdflib import Namespace, Graph
 from sparql_slurper import SlurpyGraph
-from sparql_slurper._graphdb_slurpygraph import GrapphDBSlurpyGraph
+from sparql_slurper._graphdb_slurpygraph import GraphDBSlurpyGraph
 
 endpoint = 'https://graph.fhircat.org/repositories/fhirontology'
 
@@ -23,13 +23,13 @@ class SparqlParametersTestCase(unittest.TestCase):
             Note that a copy of fhir.ttl can be found in tests/data.
         """
         FHIR = Namespace("http://hl7.org/fhir/")
-        g = GrapphDBSlurpyGraph(endpoint)
+        g = GraphDBSlurpyGraph(endpoint)
         self.assertLess(85, len(list(g.predicate_objects(FHIR.Patient))))
-        g = GrapphDBSlurpyGraph(endpoint)
+        g = GraphDBSlurpyGraph(endpoint)
         g.sparql.addParameter("infer", "false")
         self.assertGreater(60, len(list(g.predicate_objects(FHIR.Patient))))
 
-        g = GrapphDBSlurpyGraph(endpoint + '?infer=false')
+        g = GraphDBSlurpyGraph(endpoint + '?infer=false')
         self.assertGreater(60, len(list(g.predicate_objects(FHIR.Patient))))
 
 
