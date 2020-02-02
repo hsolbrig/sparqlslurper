@@ -5,6 +5,7 @@ from contextlib import redirect_stdout
 
 from rdflib import Namespace, Graph
 from sparql_slurper import SlurpyGraph
+from tests import UserAgent
 
 endpoint = 'https://query.wikidata.org/sparql'
 
@@ -14,7 +15,7 @@ class ReactomeTestCase(unittest.TestCase):
     def test_reactome(self):
         WD = Namespace("http://www.wikidata.org/entity/")
         P = Namespace("http://www.wikidata.org/prop/")
-        g = SlurpyGraph(endpoint)
+        g = SlurpyGraph(endpoint, agent=UserAgent)
         g.debug_slurps = False
         gpo = list(g.predicate_objects(WD.Q29017194))
         orig_len = len(gpo)
@@ -36,7 +37,7 @@ class ReactomeTestCase(unittest.TestCase):
 
     def test_debug_slurps(self):
         WD = Namespace("http://www.wikidata.org/entity/")
-        g = SlurpyGraph(endpoint)
+        g = SlurpyGraph(endpoint, agent=UserAgent)
         g.debug_slurps = True
         output = io.StringIO()
         with redirect_stdout(output):
@@ -50,7 +51,7 @@ class ReactomeTestCase(unittest.TestCase):
     def test_serialize(self):
         # Issue #1 - serialize goes after the entire graph
         WD = Namespace("http://www.wikidata.org/entity/")
-        g = SlurpyGraph(endpoint)
+        g = SlurpyGraph(endpoint, agent=UserAgent)
         _ = list(g.predicate_objects(WD.Q29017194))
         g.debug_slurps = True
         # Warning - this will go away forever if the bug isn't fixed

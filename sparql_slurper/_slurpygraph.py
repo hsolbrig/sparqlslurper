@@ -2,7 +2,7 @@ from typing import Dict, NamedTuple, Union, List, Tuple, Optional, Callable, Typ
 
 import time
 from SPARQLWrapper import SPARQLWrapper, JSON
-from rdflib import Graph, URIRef, Literal, BNode
+from rdflib import Graph, URIRef, Literal, BNode, Namespace
 
 QueryTriple = Tuple[Optional[URIRef], Optional[URIRef], Optional[Union[Literal, URIRef]]]
 
@@ -15,20 +15,24 @@ class RDFTriple(NamedTuple):
     p: URIRef
     o: Union[Literal, URIRef, BNode]
 
+TM_NS = Namespace("http://www.ontotext.com/tm#")
 
 class SlurpyGraph(Graph):
     """ A Graph that acts as a "cache" for a SPARQL endpoint """
-    def __init__(self, endpoint: str, *args, persistent_bnodes: bool = False, **kwargs) -> None:
+    def __init__(self, endpoint: str, *args, persistent_bnodes: bool = False, agent: Optional[str] = None,
+                 **kwargs) -> None:
         """ Create a graph
 
         :param endpoint: URL of SPARQL endpoint
-        :param persistent_bnodes: BNodes persist across SPARQL calls
+        :param persistent_bnodes: BNodes persist across SPARQL calls,
+        :param agent: User agent
+
+        :param graphdb_bnodes: Use the GraphDB bnode identifiers
         """
         self.sparql = SPARQLWrapper(endpoint)
         self.persistent_bnodes = persistent_bnodes
         self.sparql.setReturnFormat(JSON)
         self.resolved_nodes: List[QueryTriple] = [(None, None, None)]
-
         self.debug_slurps = False
         self._query_result_hook: Type[QueryResultHook] = None
         self.graph_name: str = None
@@ -38,6 +42,8 @@ class SlurpyGraph(Graph):
         self.total_triples = 0
         self.sparql_locked = False
         super().__init__(*args, **kwargs)
+        if agent:
+            self.sparql.agent = agent
 
     def add_result_hook(self, hook: Type["QueryResultHook"]) -> Type["QueryResultHook"]:
         """
@@ -49,11 +55,17 @@ class SlurpyGraph(Graph):
         self._query_result_hook = hook
         return hook
 
-    def _map_type(self, node: Dict) -> NodeType:
-        if not self.persistent_bnodes and node['type'] == 'bnode':
+    def _map_type(self, node: Dict, node_id: Optional[Dict] = None) -> NodeType:
+        """
+         Return an rdflib representation of node
+        :param node: node value
+        :param node_id: permanant identifier of node if applicable
+        :return: rdflib type
+        """
+        if not self.persistent_bnodes and node['type'] == 'bnode' and node_id is None:
             raise ValueError("SlurpyGraph cannot process BNodes")
         return URIRef(node['value']) if node['type'] == 'uri' else \
-            BNode(node['value']) if node['type'] == 'bnode' else \
+            (BNode(node['value']) if node_id is None else TM_NS[node_id['value']]) if node['type'] == 'bnode' else \
             Literal(node['value'], datatype=node.get('datatype'))
 
     @staticmethod
@@ -78,6 +90,12 @@ class SlurpyGraph(Graph):
                 return True
         return False
 
+    def gen_query(self, pattern, gquery: str, gqueryend: str) -> str:
+        subj = self._repr_element(pattern[0]) if pattern[0] is not None else '?s'
+        pred = self._repr_element(pattern[1]) if pattern[1] is not None else '?p'
+        obj = self._repr_element(pattern[2]) if pattern[2] is not None else '?o'
+        return f"SELECT ?s ?p ?o {{{gquery}{subj} {pred} {obj}{gqueryend}}}"
+
     def triples(self, pattern: QueryTriple):
         """ Return the triples that match pattern
 
@@ -92,10 +110,7 @@ class SlurpyGraph(Graph):
         else:
             gquery = gqueryend = ''
         if not self.already_resolved(pattern):
-            subj = self._repr_element(pattern[0]) if pattern[0] is not None else '?s'
-            pred = self._repr_element(pattern[1]) if pattern[1] is not None else '?p'
-            obj = self._repr_element(pattern[2]) if pattern[2] is not None else '?o'
-            query = f"SELECT ?s ?p ?o {{{gquery}{subj} {pred} {obj}{gqueryend}}}"
+            query = self.gen_query(pattern, gquery, gqueryend)
             start = time.time()
             if self.debug_slurps:
                 print(f"SPARQL: ({query})", end="")
@@ -110,9 +125,9 @@ class SlurpyGraph(Graph):
                 print(f" ({round(elapsed, 2)} secs) - {ntriples} triples")
             query_result = self._query_result_hook(self) if self._query_result_hook is not None else None
             for row in resp['results']['bindings']:
-                triple = RDFTriple(pattern[0] if pattern[0] is not None else self._map_type(row['s']),
+                triple = RDFTriple(pattern[0] if pattern[0] is not None else self._map_type(row['s'], row.get('sid', None)),
                                    pattern[1] if pattern[1] is not None else self._map_type(row['p']),
-                                   pattern[2] if pattern[2] is not None else self._map_type(row['o']))
+                                   pattern[2] if pattern[2] is not None else self._map_type(row['o'], row.get('oid', None)))
                 self.add(triple)
                 if query_result:
                     query_result.add(triple)

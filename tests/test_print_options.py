@@ -6,6 +6,7 @@ from typing import List
 from rdflib import Namespace
 
 from sparql_slurper import SlurpyGraph, QueryResultPrinter, QueryResultHook, RDFTriple
+from tests import UserAgent
 
 endpoint = 'https://query.wikidata.org/sparql'
 WD = Namespace("http://www.wikidata.org/entity/")
@@ -14,7 +15,7 @@ WD = Namespace("http://www.wikidata.org/entity/")
 class PrintOptionsTestCase(unittest.TestCase):
     @staticmethod
     def setup_test() -> SlurpyGraph:
-        g = SlurpyGraph(endpoint)
+        g = SlurpyGraph(endpoint, agent=UserAgent)
         g.bind("wd", WD)
         g.bind("wdp", "http://www.wikidata.org/prop/")
         g.bind("wdd", "http://www.wikidata.org/prop/direct/")
