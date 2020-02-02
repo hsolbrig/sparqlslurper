@@ -10,5 +10,6 @@
 # `Pipfile.lock` and then regenerate `requirements*.txt`.
 ################################################################################
 
+pbr
 rdflib>=4.2.2
 sparqlwrapper>=1.8.2

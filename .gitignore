@@ -107,3 +107,5 @@ venv.bak/
 
 .idea/
 
+# This is a library, so no locking
+Pipfile.lock
