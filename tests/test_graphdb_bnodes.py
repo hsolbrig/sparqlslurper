@@ -21,5 +21,6 @@ class GraphDBBnodeTestCase(unittest.TestCase):
         v = g.value(obj, FHIR.value)
         self.assertEqual(str(v), "pat4")
 
+
 if __name__ == '__main__':
     unittest.main()

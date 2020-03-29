@@ -12,6 +12,7 @@
 * 0.1.4 - Add persistent_bnodes parameter 
 * 0.2.0 - Switch over to pbr and pipenv
 * 0.2.1 - Add ability to supply a named graph and diagnostic/debug query results
+* 0.3.4 - Add `GraphDBSlurpyGraph` - A graph slurper that crosses pseudo blank nodes in GraphDB stores
 
 An implementation of a [`rdflib`](https://github.com/RDFLib/rdflib)[`Graph`](https://rdflib.readthedocs.io/en/stable/apidocs/rdflib.html#rdflib.graph.Graph) that acts as a cache for a SPARQL endpoint.  
 SPARQL Slurper translates the `Graph.triples()` function into the corresponding SPARQL
