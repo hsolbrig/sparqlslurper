@@ -7,6 +7,7 @@ from rdflib import Namespace, Graph
 from sparql_slurper import SlurpyGraph
 from sparql_slurper._graphdb_slurpygraph import GraphDBSlurpyGraph
 
+# Note: this endpoint is not terribly stable.  We really need to find a stable graphdb instance to switch to
 endpoint = 'https://graph.fhircat.org/repositories/fhirontology'
 
 

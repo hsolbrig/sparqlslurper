@@ -50,7 +50,7 @@ class PrintOptionsTestCase(unittest.TestCase):
         QueryResultPrinter.include_namespaces = True
         g = self.setup_test()
         result = self.do_test(g)
-        if not result.startswith('RESULTS:\n\t@prefix rdf: ') or '\twd:Q29017194 ' not in result:
+        if not result.startswith('RESULTS:\n\t@prefix rdfs: ') or '\twd:Q29017194 ' not in result:
             print(result)
             self.assertTrue(False, "Unexpected results")
 
