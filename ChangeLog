@@ -1,6 +1,17 @@
 CHANGES
 =======
 
+v0.3.6
+------
+
+* Keep py 3.6 in the works
+* Update to rdflib 5.0
+
+v0.3.5
+------
+
+* Fix a couple of unit test glips
+
 v0.3.4
 ------
 
