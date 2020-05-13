@@ -2,7 +2,7 @@ import unittest
 
 from rdflib import Namespace, BNode
 
-from sparql_slurper import SlurpyGraph
+from sparqlslurper import SlurpyGraph
 
 NEXTPROT = Namespace("http://nextprot.org/rdf#")
 

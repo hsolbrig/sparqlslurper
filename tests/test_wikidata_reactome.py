@@ -4,7 +4,7 @@ import io
 from contextlib import redirect_stdout
 
 from rdflib import Namespace, Graph
-from sparql_slurper import SlurpyGraph
+from sparqlslurper import SlurpyGraph
 from tests import UserAgent
 
 endpoint = 'https://query.wikidata.org/sparql'

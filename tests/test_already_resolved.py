@@ -2,7 +2,7 @@ import unittest
 
 from rdflib import Namespace, Literal
 
-from sparql_slurper import SlurpyGraph
+from sparqlslurper import SlurpyGraph
 
 
 class AlreadyResolvedTestCase(unittest.TestCase):

@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from sparql_slurper import SlurpyGraph, TM_NS
+from sparqlslurper import SlurpyGraph, TM_NS
 
 graphdb_id = "<http://www.ontotext.com/owlim/entity#id>"
 

@@ -4,8 +4,8 @@ import io
 from contextlib import redirect_stdout
 
 from rdflib import Namespace, Graph
-from sparql_slurper import SlurpyGraph
-from sparql_slurper._graphdb_slurpygraph import GraphDBSlurpyGraph
+from sparqlslurper import SlurpyGraph
+from sparqlslurper._graphdb_slurpygraph import GraphDBSlurpyGraph
 
 endpoint = 'https://graph.fhircat.org/repositories/fhirontology'
 

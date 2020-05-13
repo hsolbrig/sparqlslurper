@@ -5,7 +5,7 @@ from typing import List
 
 from rdflib import Namespace
 
-from sparql_slurper import SlurpyGraph, QueryResultPrinter, QueryResultHook, RDFTriple
+from sparqlslurper import SlurpyGraph, QueryResultPrinter, QueryResultHook, RDFTriple
 from tests import UserAgent
 
 endpoint = 'https://query.wikidata.org/sparql'

@@ -2,8 +2,8 @@ import unittest
 
 from rdflib import Namespace, Graph
 
-from sparql_slurper import TM_NS
-from sparql_slurper._graphdb_slurpygraph import GraphDBSlurpyGraph
+from sparqlslurper import TM_NS
+from sparqlslurper._graphdb_slurpygraph import GraphDBSlurpyGraph
 
 # Note: this endpoint is not terribly stable.  We really need to find a stable graphdb instance to switch to
 endpoint = 'https://graph.fhircat.org/repositories/fhirontology'

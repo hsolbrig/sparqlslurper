@@ -1,9 +1,7 @@
 CHANGES
 =======
 
-v0.3.6
-------
-
+* v 0.3.6 release
 * Keep py 3.6 in the works
 * Update to rdflib 5.0
 
