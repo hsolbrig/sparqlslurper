@@ -1,6 +1,13 @@
 CHANGES
 =======
 
+v0.5.0
+------
+
+* misc
+* Update tests to run both with rdflib 5 and 6
+* Remove bit-rot tests
+* Add the rdflib\_shim and a user agent package
 * Loosen rdflib dependency and add the shim
 * Remove Pipfile.lock from the distro
 * Remove decode parameter
