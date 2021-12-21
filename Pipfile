@@ -4,10 +4,10 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pbr = "*"
 
 [packages]
-rdflib = "~=5.0"
+rdflib = ">=5.0.0"
+rdflib-shim = "*"
 sparqlwrapper = ">=1.8.2"
 
 
