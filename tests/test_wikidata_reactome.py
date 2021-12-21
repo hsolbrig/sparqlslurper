@@ -55,11 +55,10 @@ class ReactomeTestCase(unittest.TestCase):
         _ = list(g.predicate_objects(WD.Q29017194))
         g.debug_slurps = True
         # Warning - this will go away forever if the bug isn't fixed
-        serialized_graph = g.serialize(format="turtle").decode('utf-8')
+        serialized_graph = g.serialize(format="turtle").decode()
         g2 = Graph()
         g2.parse(data=serialized_graph, format="turtle")
         self.assertEqual(len(list(g)), len(list(g2)))
-
 
 
 if __name__ == '__main__':

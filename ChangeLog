@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+* Loosen rdflib dependency and add the shim
+* Remove Pipfile.lock from the distro
+* Remove decode parameter
+* Change of name
+* Renamed to sparqlslurper to deal with the dash-underscore\_ problem
 * v 0.3.6 release
 * Keep py 3.6 in the works
 * Update to rdflib 5.0

@@ -7,6 +7,7 @@ from sparqlslurper import SlurpyGraph
 NEXTPROT = Namespace("http://nextprot.org/rdf#")
 
 
+@unittest.skip("http://sparql-playground.nextprot.org is no longer operational")
 class PersistentBnodeTestCase(unittest.TestCase):
     def test_persistent_bnode(self):
         """ Test the persistent_bnode argument """
