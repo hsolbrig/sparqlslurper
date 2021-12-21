@@ -1,9 +1,10 @@
+import os
 import unittest
 
 from rdflib import Namespace, Graph
 
 from sparqlslurper import TM_NS
-from sparqlslurper._graphdb_slurpygraph import GraphDBSlurpyGraph
+from sparqlslurper._user_agent import SlurpyGraphWithAgent
 
 # Note: this endpoint is not terribly stable.  We really need to find a stable graphdb instance to switch to
 endpoint = 'https://graph.fhircat.org/repositories/fhirontology'
@@ -11,12 +12,13 @@ endpoint = 'https://graph.fhircat.org/repositories/fhirontology'
 FHIR = Namespace("http://hl7.org/fhir/")
 P = Namespace("http://hl7.org/fhir/Patient/")
 
+@unittest.skip("https://graph.fhircat.org/repositories/fhirontology is no longer operational")
 class GraphDBBnodeTestCase(unittest.TestCase):
     g: Graph = None
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.g = GraphDBSlurpyGraph(endpoint)
+        cls.g = SlurpyGraphWithAgent(endpoint)
 
     def test_bnodes(self):
         self.debug_slurps = False

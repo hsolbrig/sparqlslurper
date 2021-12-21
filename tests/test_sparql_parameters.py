@@ -10,6 +10,7 @@ from sparqlslurper._graphdb_slurpygraph import GraphDBSlurpyGraph
 endpoint = 'https://graph.fhircat.org/repositories/fhirontology'
 
 
+@unittest.skip("https://graph.fhircat.org/repositories/fhirontology is no longer operational")
 class SparqlParametersTestCase(unittest.TestCase):
 
     def test_parms(self):
